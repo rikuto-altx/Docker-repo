@@ -22,15 +22,15 @@ jobs:
 
     - name: Configure Docker to use the gcloud command-line tool as a credential helper
       run: |
-        gcloud auth configure-docker
+        gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 
     - name: Build Docker image
       run: |
-        docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:latest .
+        docker build -t asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/altx-deep-counter-mk-gcs-dirs/my-app:latest .
 
     - name: Push Docker image
       run: |
-        docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:latest
+        docker push asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/altx-deep-counter-mk-gcs-dirs/my-app:latest
 
     - name: Get GKE credentials
       run: |
@@ -38,4 +38,4 @@ jobs:
 
     - name: Deploy to GKE
       run: |
-        kubectl set image deployment/my-deployment my-container=gcr.io/${{ secrets.GCP_PROJECT_ID }}/my-app:latest
+        kubectl set image deployment/my-deployment asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/altx-deep-counter-mk-gcs-dirs/my-app:latest
