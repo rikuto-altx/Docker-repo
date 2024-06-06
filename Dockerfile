@@ -5,7 +5,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # ローカルのapp.pyをコンテナの作業ディレクトリにコピー
-COPY app.py .
+COPY src/ .
 
 # コンテナ起動時に実行されるコマンドを指定
 CMD ["python", "app.py"]
