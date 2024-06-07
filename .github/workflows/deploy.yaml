@@ -3,7 +3,7 @@ name: Build, Push, and Deploy to GKE
 on:
   push:
     branches:
-      - main  # マージ先のブランチを指定
+      - main  # マージ先のブランチを指定する
 
 jobs:
   build:
