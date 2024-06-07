@@ -3,7 +3,7 @@ name: Build, Push, and Deploy to GKE
 on:
   push:
     branches:
-      - main  # マージ先のブランチを指定
+      - main  # マージ先のブランチを指定する。
 
 jobs:
   build:
@@ -38,4 +38,4 @@ jobs:
 
     - name: Deploy to GKE
       run: |
-        kubectl set image deployment/my-deployment asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/altx-deep-counter-mk-gcs-dirs/my-app:latest
+        kubectl set image deployment/my-deployment my-container=asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/altx-deep-counter-mk-gcs-dirs/my-app:latest
