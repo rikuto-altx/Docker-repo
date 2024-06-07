@@ -15,5 +15,7 @@ spec:
       containers:
       - name: my-container
         image: gcr.io/YOUR_PROJECT_ID/my-app:latest
+        tty: true
+        stdin: true
         ports:
         - containerPort: 80
