@@ -17,35 +17,20 @@ jobs:
       run: |
         echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 --decode > gcloud-service-key.json
 
-    - name: Upload service account key file as artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: gcloud-service-key
-        path: gcloud-service-key.json
-
-    - name: Install gke-gcloud-auth-plugin
-      run: |
-        sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates gnupg
-        echo "deb https://packages.cloud.google.com/apt gke-gcloud-auth-plugin main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-        curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-        sudo apt-get update && sudo apt-get install -y google-cloud-sdk-gke-gcloud-auth-plugin
-
     - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v1
-      with:
-        version: 'latest'
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-
-    - name: Download service account key file
-      uses: actions/download-artifact@v2
-      with:
-        name: gcloud-service-key
-        path: .
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: 'latest'
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
 
     - name: Authenticate to Google Cloud
       run: |
         gcloud auth activate-service-account --key-file=gcloud-service-key.json
         gcloud config set project ${{ secrets.GCP_PROJECT_ID }}
+
+    - name: Install gke-gcloud-auth-plugin
+      run: |
+        gcloud components install gke-gcloud-auth-plugin
 
     - name: Configure Docker to use the gcloud command-line tool as a credential helper
       run: |
