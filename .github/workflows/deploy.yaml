@@ -22,6 +22,8 @@ jobs:
 
     - name: Configure Docker to use the gcloud command-line tool as a credential helper
       run: |
+        echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > "${{ github.workspace }}/gcloud-service-key.json"
+        gcloud auth activate-service-account --key-file="${{ github.workspace }}/gcloud-service-key.json"
         gcloud auth configure-docker asia-northeast1-docker.pkg.dev
 
     - name: Build Docker image
